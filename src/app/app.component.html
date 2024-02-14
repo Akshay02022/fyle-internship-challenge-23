@@ -1,5 +1,183 @@
 <div class="grid h-screen place-items-center">
-  <div class="font-bold text-3xl">
-    Fyle Internship Challenge
+  <!-- SearchBar -->
+  <div class="input-container mt-4 focus:w-96">
+    <input type="text" [(ngModel)]='githubusername' placeholder="Enter GitHub username" name="githubusername"
+      class="p-2 rounded border border-gray-300 bg-inherit ">
+    <button (click)="searchUser()" class="ml-2 px-4 py-2 rounded bg-blue-500 text-white">Search</button>
   </div>
+  <!-- UserInfo -->
+  <div *ngIf="isLoadingUser; else lodingUser">
+    <div *ngIf="userData; else userNotFound" class="user-info mt-4 flex border px-11 py-10 rounded-lg">
+      <div class="w-48 h-48 rounded-full overflow-hidden mr-11">
+        <img [src]="userData.avatar_url" alt="User Avatar">
+      </div>
+      <div class="user-details">
+        <h1 class="text-2xl font-bold mb-2">{{userData.login}}</h1>
+        <h2 class="text-l font-semibold mb-2 text-zinc-400">{{ userData.name }}</h2>
+        <p *ngIf="userData.bio" class="mb-2 text-zinc-400">{{ userData.bio }}</p>
+
+        <div *ngIf="userData.location" class="mb-2 flex gap-2 text-zinc-400 ">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 mt-1">
+            <path fill-rule="evenodd"
+              d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+              clip-rule="evenodd" />
+          </svg>
+          <p> {{ userData.location}}</p>
+        </div>
+        <div class="mb-2 flex gap-2 ">
+          <p class="font-bold"> {{userData.public_repos}}</p>
+          <p class="text-zinc-400">Repositories</p>
+        </div>
+        <div class="mb-2 flex gap-5">
+          <div class=" flex gap-2 ">
+            <p class="font-bold"> {{userData.followers}}</p>
+            <p class="text-zinc-400">Followers</p>
+          </div>
+          <div class=" flex gap-2 ">
+            <p class="font-bold"> {{userData.following}}</p>
+            <p class="text-zinc-400">Following</p>
+          </div>
+        </div>
+        <div *ngIf=" userData.created_at" class="mb-2 flex gap-2 text-zinc-400 ">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 mt-1">
+            <path
+              d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
+            <path fill-rule="evenodd"
+              d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z"
+              clip-rule="evenodd" />
+          </svg>
+          <p>{{ userData.created_at | date : "dd MMM, YYYY" }}</p>
+        </div>
+        <a [href]="userData.html_url" target="_blank" class="text-blue-500 hover:underline">GitHub</a>
+        <a *ngIf="userData.twitter_username" [href]="'https://twitter.com/' + userData.twitter_username" target="_blank"
+          class="text-blue-500 hover:underline ml-4">Twitter</a>
+      </div>
+    </div>
+  </div>
+  <ng-template #lodingUser>
+    <div class="user-info mt-4 flex border px-11 py-10 rounded-lg animate-pulse">
+      <div
+        class="w-48 h-48 rounded-full flex items-center justify-center overflow-hidden mr-11 bg-gray-300 dark:bg-gray-700">
+        <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor" viewBox="0 0 20 18">
+          <path
+            d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+        </svg>
+      </div>
+      <div class="user-details">
+        <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-36 mb-4"></div>
+        <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+        <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-64 mb-4"></div>
+        <div class=" flex gap-2">
+          <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-4 mb-4"></div>
+          <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-24 mb-4"></div>
+        </div>
+        <div class="mb-4 flex gap-2 ">
+          <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-12 "></div>
+          <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-24 "></div>
+        </div>
+        <div class="mb-4 flex gap-5">
+          <div class=" flex gap-2 ">
+            <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-12 "></div>
+            <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-24 "></div>
+          </div>
+          <div class=" flex gap-2 ">
+            <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-12 "></div>
+            <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-24 "></div>
+          </div>
+        </div>
+        <div class="mb-4 flex gap-2 text-zinc-400 ">
+          <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-4 "></div>
+          <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-24 "></div>
+        </div>
+        <div class="mb-4 flex gap-4 text-zinc-400 ">
+          <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-24 "></div>
+          <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-24 "></div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #userNotFound>
+    <p>User does not exist.</p>
+  </ng-template>
+  <!-- Repositories -->
+  <h1 class="text-4xl font-extrabold flex justify-center my-5 ">Repositories</h1>
+  <div>
+    <div *ngIf="isLoadingRepos; else repoDataSkeleton" class="mx-52">
+      <div *ngIf="repositories.length > 0; else noRepos" class="repository-list mt-4">
+        <div class="flex flex-wrap mx-10">
+          <div *ngFor="let repo of repositories" class="w-1/2 px-5 mb-10  ">
+            <div class=" p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-zinc-800 dark:border-zinc-700">
+              <h3 class="mb-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">{{ repo.name }}</h3>
+              <p class="mb-3 font-normal text-zinc-700 dark:text-zinc-400">
+                {{ repo.description || 'No description available' }}
+              </p>
+              <div class="topic-list flex flex-wrap  gap-2 ">
+                <p
+                  class=" px-3 py-1 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  {{ repo.language || "No Tag"}}</p>
+                <div *ngFor="let topic of repo.topics" class="tags flex gap-2  ">
+                  <p
+                    class=" px-3 py-1 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    {{ topic }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pagination flex justify-evenly mb-10 gap-5 ">
+          <!-- Previous and Next buttons -->
+          <div class="flex justify-evenly gap-10">
+            <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+              class="px-3 py-1 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Older</button>
+
+            <span class="">{{ currentPage }}</span>
+            <button (click)="changePage(currentPage + 1)" [disabled]="repositories.length < itemsPerPage"
+              class="px-3 py-1 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Newer</button>
+          </div>
+
+          <!-- Items per page selection -->
+          <div class="flex">
+            <p class=" flex font-normal text-center items-center text-zinc-700 dark:text-zinc-400">
+              Repos/page
+            </p>
+            <select class=" px-2  bg-zinc-900 outline-none" [(ngModel)]="itemsPerPage" (change)="loadRepositories()">
+              <option value=10>10 </option>
+              <option value=20>20 </option>
+              <option value=50>50 </option>
+              <option value=100>100 </option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <ng-template #repoDataSkeleton>
+      <div class="flex flex-wrap mx-10">
+        <div class=" px-5 mb-10  ">
+          <div
+            class=" p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-zinc-800 dark:border-zinc-700 animate-pulse">
+            <div class="h-5 bg-gray-200 rounded-full dark:bg-gray-700 w-36 mb-4"></div>
+            <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-80 mb-4"></div>
+            <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+            <div class="h-6 bg-gray-200 rounded-lg dark:bg-gray-700 w-14 "></div>
+          </div>
+        </div>
+        <div class=" px-5 mb-10  ">
+          <div
+            class=" p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-zinc-800 dark:border-zinc-700 animate-pulse">
+            <div class="h-5 bg-gray-200 rounded-full dark:bg-gray-700 w-36 mb-4"></div>
+            <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-80 mb-4"></div>
+            <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+            <div class="h-6 bg-gray-200 rounded-lg dark:bg-gray-700 w-14 "></div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #noRepos>
+      <p>No repositories available.</p>
+    </ng-template>
+
+  </div>
+
 </div>
