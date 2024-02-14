@@ -15,21 +15,22 @@ The Fyle frontend challenge presented an exciting opportunity to showcase Angula
 
 ## Table of Contents
 - Getting Started
-- Prerequisites
-- Installation
+    - Prerequisites
+    - Installation
 - Running the Project
 - Testing
 - Further Help
   
 ### Getting Started
 **Prerequisites**
-Before you begin, ensure you have the following installed:
+ 
+ Before you begin, ensure you have the following installed:
 - Node.js: Download and install Node.js from nodejs.org.
 - npm: npm is bundled with Node.js. You can verify its installation by running npm -v.
 - Angular cli: The Angular CLI is a command-line interface tool that you use to initialize, develop, scaffold, and maintain Angular applications directly from a command shell.
   [ref]https://angular.io/cli
   
-### Installation
+ **Installation**
 - Clone this repository to your local machine:
 ```git clone https://github.com/your-username/your-project.git```
 - Navigate to the project directory:
