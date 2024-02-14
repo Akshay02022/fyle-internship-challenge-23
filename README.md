@@ -1,43 +1,53 @@
-# Fyle Frontend Challenge
+# Fyle Frontent Challenge
+The Fyle frontend challenge presented an exciting opportunity to showcase Angular expertise while leveraging the Github API to develop a dynamic Github profile viewer. Participants were tasked with forking and constructing an Angular project, then crafting a sleek interface to interact with Github's vast repository of user data.
 
-## Who is this for?
+**The challenge involved several key components:**
 
-This challenge is meant for candidates who wish to intern at Fyle and work with our engineering team. The candidate should be able to commit to at least 6 months of dedicated time for internship.
+- Angular Project Setup: Participants were required to set up a clean Angular project, ensuring proper configuration and dependencies for seamless development.
 
-## Why work at Fyle?
+- Github API Integration: Utilizing Angular's HttpClient module, contestants interfaced with the Github API to retrieve user profile data, repositories, and other relevant information.
 
-Fyle is a fast-growing Expense Management SaaS product. We are ~40 strong engineering team at the moment. 
+- User Interface Design: Crafting an intuitive and visually appealing user interface was crucial. Contestants had the freedom to design elements such as user profile cards, repository lists, and navigation features to enhance user experience.
 
-We are an extremely transparent organization. Check out our [careers page](https://careers.fylehq.com) that will give you a glimpse of what it is like to work at Fyle. Also, check out our Glassdoor reviews [here](https://www.glassdoor.co.in/Reviews/Fyle-Reviews-E1723235.htm). You can read stories from our teammates [here](https://stories.fylehq.com).
+- Unit Testing: Emphasizing code quality and reliability, participants implemented unit tests using Angular's testing utilities. Testing components, services, and other modules ensured functionality remained consistent and bug-free.
 
-## Challenge outline
+- Code Coverage: As a measure of code quality and test coverage, contestants aimed to achieve high code coverage percentages. Employing tools like Karma and Jasmine, they analyzed and improved code coverage to ensure comprehensive testing across the application.
 
-This challenge involves implementing application using github api. 
+## Table of Contents
+- Getting Started
+- Prerequisites
+- Installation
+- Running the Project
+- Testing
+- Further Help
+  
+### Getting Started
+**Prerequisites**
+Before you begin, ensure you have the following installed:
+- Node.js: Download and install Node.js from nodejs.org.
+- npm: npm is bundled with Node.js. You can verify its installation by running npm -v.
+- Angular cli: The Angular CLI is a command-line interface tool that you use to initialize, develop, scaffold, and maintain Angular applications directly from a command shell.
+  [ref]https://angular.io/cli
+  
+### Installation
+- Clone this repository to your local machine:
+```git clone https://github.com/your-username/your-project.git```
+- Navigate to the project directory:
+  ```cd your-project```
+- Install project dependencies:
+ ```npm install```
 
-The services that you need to use are already implemented - check out ApiService.
+### Running the Project
+- To run the project locally, use the following command:
+`ng serve`
 
-You can see details of this challenge [here](https://fyleuniverse.notion.site/fyleuniverse/Fyle-Frontend-development-challenge-cb5085e5e0864e769e7b98c694400aaa)
+This will start the development server. 
+Open your browser and visit **http://localhost:4200/** to view your Angular app.
 
-__Note__ - This challenge is in angular. We work on angular frameworks & after you join we expect the same from you. Hence it is required to complete this assignement in angular itself.
+### Testing
+We use Jasmine for testing. To run tests, execute:
+`ng test`
 
-## What happens next?
+### Further help
+Visit the [Angular Documentation](https://angular.io/guide/styleguide) to learn more. Styling is to be strictly done with [Tailwind](https://tailwindcss.com/docs/installation)https://tailwindcss.com/docs/installation.
 
-You will hear back within 48 hours from us via email.
-
-## Installation
-
-1. Fork this repository to your github account.
-2. Clone the forked repository and proceed with steps mentioned below.
-
-### Install requirements
-* Install angular cli [Ref](https://angular.io/cli)
-* `npm install` in this repository 
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Further help
-
-Visit the [Angular Documentation](https://angular.io/guide/styleguide) to learn more.
-Styling is to be strictly done with [Tailwind](https://tailwindcss.com/docs/installation).
